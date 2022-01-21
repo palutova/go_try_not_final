@@ -1,0 +1,9 @@
+CREATE TABLE "categories" (
+  "id" bigserial PRIMARY KEY,
+  "title" varchar NOT NULL,
+  "slug" varchar NOT NULL,
+  "prior" int NOT NULL DEFAULT (9),
+  "hided" boolean DEFAULT (false),
+  "created_at" timestamp NOT NULL DEFAULT (now()),
+  "updated_at" timestamp NOT NULL DEFAULT (now())
+);

@@ -1,0 +1,17 @@
+CREATE TABLE "projects" (
+  "id" bigserial PRIMARY KEY,
+  "title" varchar NOT NULL,
+  "slug" varchar NOT NULL,
+  "siteurl" varchar,
+  "content" text NOT NULL,
+  "created_at" timestamp NOT NULL DEFAULT (now()),
+  "updated_at" timestamp NOT NULL DEFAULT (now()),
+  "published_at" timestamp,
+  "hided" boolean DEFAULT (true),
+  "wide_block" boolean DEFAULT (false),
+  "headimg" varchar,
+  "preview" varchar,
+  "video_preview" varchar,
+  "second_preview" varchar,
+  "video_preview_loop" boolean DEFAULT (false)
+);

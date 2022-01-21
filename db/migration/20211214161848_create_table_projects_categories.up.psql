@@ -1,0 +1,6 @@
+CREATE TABLE "projects_categories" (
+  "id" bigserial UNIQUE NOT NULL,
+  "projects_id" int REFERENCES "projects" (id) ON UPDATE CASCADE ON DELETE CASCADE,
+  "categories_id" int REFERENCES "categories" (id) ON UPDATE CASCADE,
+  CONSTRAINT "projects_categories_pkey" PRIMARY KEY ("projects_id", "categories_id")  -- explicit pk
+);

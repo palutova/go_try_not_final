@@ -1,0 +1,37 @@
+.PHONY: createdb dropdb migrateup migratedown
+DB_NAME=pmgo
+DB_USER=pmgo
+DB_PSWD=1
+TIMEZONE=Asia/Krasnoyarsk
+PATH_TO_ADMIN_BACKUP = /Users/go-user/Downloads/admin.pgsql.txt
+.ONESHELL:
+
+createdb:
+	psql -c "CREATE DATABASE ${DB_NAME} WITH ENCODING 'UTF8' OWNER ${DB_USER};" \
+	psql -d ${DB_NAME} < ${PATH_TO_ADMIN_BACKUP} \
+	psql -c "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO ${DB_USER};" \
+	psql -c "GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO ${DB_USER};" \
+
+dropdb:
+	psql -c "DROP DATABASE ${DB_NAME};"
+
+migrateup:
+	migrate -path db/migration -database "postgresql://${DB_USER}:@localhost:5432/${DB_NAME}?sslmode=disable" -verbose up
+
+migratedown:
+	migrate -path db/migration -database "postgresql://${DB_USER}:@localhost:5432/${DB_NAME}?sslmode=disable" -verbose down
+
+migrategoto:
+	migrate -path db/migration -database "postgresql://${DB_USER}:@localhost:5432/${DB_NAME}?sslmode=disable" -verbose down
+
+createtable:
+	migrate create -ext psql -tz ${TIMEZONE} -dir db/migration create_table_$(crt-tbl-nm)
+
+droptable:
+	migrate create -ext psql -tz ${TIMEZONE} -dir db/migration drop_table_$(drp-tbl-nm)
+
+changetable:
+	migrate create -ext psql -tz ${TIMEZONE} -dir db/migration change_table_$(cng-tbl-nm)
+
+dropalltables:
+	migrate -path db/migration -database "postgresql://${DB_USER}:@localhost:5432/${DB_NAME}?sslmode=disable" -verbose drop

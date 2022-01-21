@@ -1,0 +1,37 @@
+<!--header.html-->
+
+<!doctype html>
+<html>
+
+<head>
+    <!--Use the `title` variable to set the title of the page-->
+    <title>{{ .title }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <style>
+        .test {
+            padding: 50px;
+            width: 100%;
+            text-align: center;
+        }
+    </style>
+    <!--Use bootstrap to make the application look nice-->
+</head>
+
+<body class="container">
+<div class="hello">
+    <h1>{{ .msg}}</h1>
+    {{range .payload }}
+    <!--Create the link for the article based on its ID-->
+    <a href="/projects/{{.ID}}">
+        <!--Display the title of the article -->
+        <h2>{{.Title}}</h2>
+    </a>
+    <!--Display the content of the article-->
+    <p>{{.Content}}</p>
+    {{end}}
+</div>
+</body>
+</html>
+
+
